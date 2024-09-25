@@ -2,3 +2,62 @@
     border: solid 1px ;
    margin: 30px;
 }
+
+/*Todo-List*/
+
+#body1{
+    display: flex;
+    border: solid 1px;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    margin-top: 20%;
+}
+
+#section1, #section2, #section3{
+    display: flex;
+    border: solid 1px;
+    width: 50%;
+    justify-content: space-evenly;
+}
+
+
+#inputbox{
+    width:70%;
+    height: 30px;
+    border: solid 2px lightpink;
+
+}
+
+#addbtn{
+    border:none;
+    background-color: lightpink;
+}
+
+#title{
+    display: flex;
+}
+
+#section3{
+    flex-direction: column;
+}
+
+.addDiv{
+    border: solid 1px lightpink;
+    margin: 5px 1px 5px 0px;
+    display: flex;
+    width: 95%;
+    height: 30px;
+    flex-direction: column;
+    padding: 1px;
+}
+.addTitle{
+
+}
+
+.Delbtn{
+    height:40%;
+
+}
