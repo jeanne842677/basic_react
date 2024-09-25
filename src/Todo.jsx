@@ -36,7 +36,7 @@ function Todo (){
                 <button onClick={Clickbtn} id="addbtn">추가</button>
             </div>
             <div id="section2">
-                <div id="title">Todo List</div>
+                <div id="title">Todo List!</div>
             </div>
             <div id="section3" >
                 {mkDiv}
