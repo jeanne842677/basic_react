@@ -25,15 +25,23 @@ function Todo() {
         return (
             <div className="addDiv">
                 <div className="addTitle">{props.item}</div>
-                <button className="Delbtn" onClick={(e)=>{console.log(e.target)}}>삭제</button>
+                <button className="Delbtn" onClick={()=> doDelDiv(props.index)}>삭제</button>
             </div>
         )
+    }
+
+    function doDelDiv(index){
+        console.log(index);
+       const newMkDiv = [...mkDiv];
+        newMkDiv.splice(index,1);
+        setMkDiv(newMkDiv);
+
     }
 
     function AddBoard(props){
         return(
             <>
-                {props.mkDiv.map((item) => <AddItem item={item}/>)}
+                {props.mkDiv.map((item,index) => <AddItem key={index} item={item}/>)}
             </>
         )
     }
