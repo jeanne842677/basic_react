@@ -1,51 +1,56 @@
 import './App.css';
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
+//import AddItem from "./components/AddItem";
 
-const NewComponent = ({id,onDelete,onGetValue}) => {
-    console.log(onGetValue);
 
-    return <>
-        <div className="addDiv">
-            <div className="addTitle">{onGetValue}</div>
-            <button className="Delbtn" onClick={()=>onDelete(id)}>삭제</button>
-        </div>
-    </>
-};
-
+/* 1. 인풋창이 있고 버튼이 있다.
+ * 2. 인풋창에 값을 입력하고 버튼을 클릭하면 아이템이 추가가 된다.
+ * 3. 아이템 삭제버튼을 누르면 삭제가 가능하다.
+ */
 
 function Todo() {
     const [mkDiv, setMkDiv] = useState([]);
     const [inputVal, setInputVal] = useState("");
-    const inputToDo = useRef(null);
 
-    const doDelDiv = (id) => {
-        setMkDiv(mkDiv.filter((mkDiv)=> mkDiv.id !== id));
+    const AddDiv = () => {
+
+           setMkDiv([...mkDiv, inputVal])
+            setInputVal("")
+        console.log(mkDiv);
 
     }
-    const Clickbtn = () => {
-        const newComponentNum = {id: mkDiv.length+1};
-        setMkDiv([...mkDiv, newComponentNum]);
-        setInputVal("");
+
+
+    function AddItem(props){
+        return (
+            <div className="addDiv">
+                <div className="addTitle">{props.item}</div>
+                <button className="Delbtn" onClick={(e)=>{console.log(e.target)}}>삭제</button>
+            </div>
+        )
     }
 
-    const getValue = () => {
-        console.log(inputVal); // 현재 input 값 출력
-    };
+    function AddBoard(props){
+        return(
+            <>
+                {props.mkDiv.map((item) => <AddItem item={item}/>)}
+            </>
+        )
+    }
 
 
-    return(
+    return (
         <div id="body1">
             <div id="section1">
-                <input id="inputbox" type="text" value={inputVal} ref={inputToDo} onChange={(e) => {setInputVal(e.target.value)}}></input>
-                <button onClick={Clickbtn} id="addbtn">추가</button>
+                <input id="inputbox" type="text" value={inputVal} onChange={(e) => {setInputVal(e.target.value)}}></input>
+                <button onClick={AddDiv} id="addbtn">추가</button>
             </div>
             <div id="section2">
-                <div id="title">Todo List!</div>
+                <div id="title">Todo List</div>
             </div>
             <div id="section3" >
-                {mkDiv.map((mkDiv)=>(
-                    <NewComponent key={mkDiv.id} id={mkDiv.id} onGetValue={getValue} onDelete={doDelDiv} ></NewComponent>
-                ))}
+                <AddBoard mkDiv={mkDiv}/>
+
             </div>
         </div>
     )
