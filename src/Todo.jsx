@@ -13,9 +13,12 @@ function Todo() {
     const [inputVal, setInputVal] = useState("");
 
     const AddDiv = () => {
-
-           setMkDiv([...mkDiv, inputVal])
-            setInputVal("")
+            if (inputVal === ""){
+                alert("내용을 입력하세요!")
+            }else {
+                setMkDiv([...mkDiv, inputVal])
+                setInputVal("")
+            }
     }
 
 
