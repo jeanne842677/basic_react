@@ -1,6 +1,6 @@
 import './App.css';
 import React, {useState} from "react";
-//import AddItem from "./components/AddItem";
+import AddItem from "./components/AddItem";
 
 
 /* 1. 인풋창이 있고 버튼이 있다.
@@ -19,18 +19,8 @@ function Todo() {
     }
 
 
-    function AddItem(props){
-        return (
-            <div className="addDiv">
-                <div className="addTitle">{props.item}</div>
-                <button className="Delbtn" onClick={()=> doDelDiv(props.index)}>삭제</button>
-            </div>
-
-        )
-    }
-
     function doDelDiv(index){
-       const newMkDiv = [...mkDiv];
+        const newMkDiv = [...mkDiv];
         newMkDiv.splice(index,1);
         setMkDiv(newMkDiv);
     }
@@ -38,7 +28,7 @@ function Todo() {
     function AddBoard(props){
         return(
             <>
-                {props.mkDiv.map((item,index) => <AddItem key={index} index={index} item={item}/>)}
+                {props.mkDiv.map((item,index) => <AddItem doDelDiv={doDelDiv} key={index} index={index} item={item}/>)}
             </>
         )
     }
