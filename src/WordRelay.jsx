@@ -13,7 +13,7 @@ function WordRelay (){
             setResult("딩동댕!!");
             setBeforeWord(inputWord);
             setInputWord("");
-            wordArray.push(inputWord);
+            setWordArray([...wordArray,inputWord])
         } else {
             setResult("땡!!");
             setInputWord("");
@@ -28,9 +28,8 @@ function WordRelay (){
                 <button onClick={btnClick}>입력</button>
             </div>
             <div>{result}</div>
-            <div>{wordArray}</div>
+            <div>{wordArray.map((v)=>{ return (<div>{v}</div>)})}</div>
         </>
-    )
-}
+    )}
 
 export default WordRelay;
