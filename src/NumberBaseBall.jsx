@@ -60,7 +60,7 @@ function NumberBaseBall () {
                 <button>입력!</button>
             </form>
             <div>시도: {tryArray.length}</div>
-            <div>{tryArray.map((v,i)=> {
+            <div>{tryArray.map((v)=> {
                 return (
                     <>
                         <div>{v.tryValue}</div>
