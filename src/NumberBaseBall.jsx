@@ -1,68 +1,62 @@
 import React, {useRef, useState} from "react";
 
+const getNumbers = () => {
+    const candidates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const array = [];
+    for (let i = 0; i < 4; i += 1) {
+        const chosen = candidates.splice(Math.floor(Math.random() * (9 - i)), 1)[0];
+        array.push(chosen);
+    }
+    return array;
+};
+
 function NumberBaseBall () {
 
-
-    const [strikeNum, setStrike] = useState("");
-    const [ballNum, setBallNum] = useState("");
-    const [inputValue, setInputValue] = useState([]);
+    const [chosenNum, setChosenNum] = useState(getNumbers());
+    const [result, setResult] = useState("");
+    const [inputValue, setInputValue] = useState("");
     const refValue = useRef(null);
+    const [tryArray, setTryArray] = useState([]);
+
+
 
     const onSubmitForm = (e) =>{
         e.preventDefault();
-
-        var strikeCnt =0;
-        var ballCnt=0;
-        const firstNum = Math.floor(Math.random() * 9);
-        const secondNum = Math.floor(Math.random() * 9);
-        const thirdNum = Math.floor(Math.random() * 9);
-        const fourthNum = Math.floor(Math.random() * 9);
-        let firstVal = inputValue[0];
-        let secondVal = inputValue[1];
-        let thirdVal = inputValue[2];
-        let fourthVal = inputValue[3];
-        firstVal = inputValue.slice(0,1);
-        secondVal = inputValue.slice(1,1);
-        thirdVal = inputValue.slice(2,1);
-        fourthVal = inputValue.slice(3,1);
-        console.log(firstNum, secondNum, thirdNum, fourthNum);
-        console.log("보고싶은값 : " + secondVal);
-        if (firstNum === firstVal){
-            strikeCnt +=1;
-        }else{
-            ballCnt +=1;
+        var strikeCnt = 0
+        for(let i=0; i<chosenNum.length; i+=1){
+            if(chosenNum[i] === parseInt(inputValue.substr(i,1))){
+                strikeCnt += 1;
+            }
         }
-        if (secondNum === secondVal){
-            strikeCnt +=1;
+        if(strikeCnt === 4){
+            setResult("홈런!!!!⚾️⚾️⚾️⚾️");
+            setChosenNum(getNumbers());
+            alert("게임을 다시 시작합니다.");
+            setTryArray([]);
         }else{
-            ballCnt +=1;
-        }
-        if (thirdNum === thirdVal){
-            strikeCnt +=1;
-        }else{
-            ballCnt +=1;
-        }
-        if (fourthNum === fourthVal){
-            strikeCnt +=1;
-        }else{
-            ballCnt +=1;
-        }
+            setResult(strikeCnt + "스트라이크" + (4-strikeCnt) + "볼" );
+            setTryArray([...tryArray, inputValue]);
 
-        setStrike(strikeCnt);
-        setBallNum(ballCnt);
+            if (tryArray.length === 10){
+                setChosenNum(getNumbers());
+                alert("게임을 다시 시작합니다.");
+                setTryArray([]);
 
-
+            }
+        }
 
     }
 
 
     return(
         <>
-            <div>{strikeNum}스트라이크 {ballNum}볼입니다.</div>
+            <div>{chosenNum}</div>
+            <div>{result}</div>
             <form onSubmit={onSubmitForm} >
-                <input type="number" value={inputValue} ref={refValue} onChange={(e)=>setInputValue(e.target.value)}/>
+                <input type="number" maxLength={4} value={inputValue} ref={refValue} onChange={(e)=>setInputValue(e.target.value)}/>
                 <button>입력!</button>
             </form>
+            <div>{tryArray.map((v,i)=> {return (<div key={v-i}>{v}</div>)})}</div>
         </>
     )
 }
