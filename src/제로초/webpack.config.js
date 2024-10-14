@@ -1,29 +1,44 @@
 const path = require('path');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = {
-    name: 'word-relay-setting',
-    mode: 'development', //실서비스 : production
-    devtool: 'eval',
-    resolve:{
-        extensions: ['.js', '.jsx']
+    name: 'word-relay-dev',
+    mode: 'development',
+    devtool: 'inline-source-map',
+    resolve: {
+        extensions: ['.js', '.jsx'],
     },
-
     entry: {
-        app: ['./client'],
-    }, //입력 얘네 합쳐서  -> 출력으로 만들어준다
-
-    module:{
-        rules:[{
-            test:/\.jsx?/,
+        app: './client',
+    },
+    module: {
+        rules: [{
+            test: /\.jsx?$/,
             loader: 'babel-loader',
-            options:{
-                presets:['@babel/preset-env', '@babel/preset-react']
-            }
+            options: {
+                presets: [
+                    ['@babel/preset-env', {
+                        targets: {browsers: ['last 2 chrome versions']},
+                        debug: true,
+                    }],
+                    '@babel/preset-react',
+                ],
+                plugins: ['react-refresh/babel'],
+            },
+            exclude: path.join(__dirname, 'node_modules'),
         }],
     },
-
+    plugins: [
+        new ReactRefreshWebpackPlugin(),
+    ],
     output: {
-        path: path.join(__dirname, 'dist'),  //경로를 하나로 합쳐줌
-        filename: 'app.js'
-    }, //출력
+        path: path.join(__dirname, 'dist'),
+        filename: '[name].js',
+        publicPath: '/dist',
+    },
+    devServer: {
+        devMiddleware: { publicPath: '/dist' },
+        static: { directory: path.resolve(__dirname) },
+        hot: true
+    }
 };
